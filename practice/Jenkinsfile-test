@@ -1,0 +1,16 @@
+pipeline {
+  agent any
+  parameters {
+    choice(name: 'SELECT_PIPELINE', choices: ['build', 'deploy', 'test'], description: 'Choose which pipeline to run')
+  }
+  stages {
+    stage('Run Selected Pipeline') {
+      steps {
+        script {
+          def fileToRun = "Jenkinsfile-${params.SELECT_PIPELINE}"
+          load "${fileToRun}"
+        }
+      }
+    }
+  }
+}
